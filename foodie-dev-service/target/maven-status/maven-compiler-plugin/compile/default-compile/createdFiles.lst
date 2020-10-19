@@ -1,0 +1,10 @@
+com\chenglong\service\CategoryService.class
+com\chenglong\service\impl\CategoryServiceImpl.class
+com\chenglong\service\CarouselService.class
+com\chenglong\service\impl\StuServiceImpl.class
+com\chenglong\service\impl\TestTransServiceImpl.class
+com\chenglong\service\impl\UserServiceImpl.class
+com\chenglong\service\StuService.class
+com\chenglong\service\TestTransService.class
+com\chenglong\service\impl\CarouselServiceImpl.class
+com\chenglong\service\UserService.class

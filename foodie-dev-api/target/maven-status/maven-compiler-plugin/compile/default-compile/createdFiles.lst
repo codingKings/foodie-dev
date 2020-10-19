@@ -1,0 +1,8 @@
+com\chenglong\config\Swagger2.class
+com\chenglong\controller\HelloController.class
+com\chenglong\controller\PassportController.class
+com\chenglong\controller\IndexController.class
+com\chenglong\Application.class
+com\chenglong\config\CorsConfig.class
+com\chenglong\aspect\ServiceLogAspect.class
+com\chenglong\controller\StuController.class

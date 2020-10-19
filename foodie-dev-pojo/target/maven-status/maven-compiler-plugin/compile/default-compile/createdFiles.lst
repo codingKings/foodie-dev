@@ -1,0 +1,16 @@
+com\chenglong\pojo\ItemsParam.class
+com\chenglong\pojo\UserAddress.class
+com\chenglong\pojo\Stu.class
+com\chenglong\pojo\ItemsImg.class
+com\chenglong\pojo\Items.class
+com\chenglong\pojo\vo\SubCategoryVO.class
+com\chenglong\pojo\bo\UserBO.class
+com\chenglong\pojo\OrderStatus.class
+com\chenglong\pojo\Carousel.class
+com\chenglong\pojo\Category.class
+com\chenglong\pojo\ItemsComments.class
+com\chenglong\pojo\Users.class
+com\chenglong\pojo\vo\CategoryVO.class
+com\chenglong\pojo\OrderItems.class
+com\chenglong\pojo\Orders.class
+com\chenglong\pojo\ItemsSpec.class

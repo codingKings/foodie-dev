@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>foodie-dev</artifactId>
+        <groupId>com.chenglong</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>foodie-dev-api</artifactId>
+
+    <dependencies>
+        <!--
+            api依赖了service
+            service依赖了mapper
+            mapper依赖了pojo,pojo又依赖了common
+            api通过service、pojo是可以使用common中相应的方法的
+
+            注意api可以同时依赖多个子模块
+        -->        <dependency>
+            <groupId>com.chenglong</groupId>
+            <artifactId>foodie-dev-mapper</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.chenglong</groupId>
+            <artifactId>foodie-dev-service</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+</project>
