@@ -1,1 +1,0 @@
-swagger2,tkmapper,log4j
