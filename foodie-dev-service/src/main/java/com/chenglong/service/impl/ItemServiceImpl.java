@@ -5,6 +5,8 @@ import com.chenglong.mapper.*;
 import com.chenglong.pojo.*;
 import com.chenglong.pojo.vo.CommentLevelCountsVO;
 import com.chenglong.pojo.vo.ItemCommentVO;
+import com.chenglong.pojo.vo.SearchItemsVO;
+import com.chenglong.pojo.vo.ShopcatVO;
 import com.chenglong.service.ItemService;
 import com.chenglong.util.DesensitizationUtil;
 import com.chenglong.util.PagedGridResult;
@@ -16,9 +18,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.mapper.entity.Example;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @Author: 程龙
@@ -116,20 +116,48 @@ public class ItemServiceImpl implements ItemService {
 
         for (ItemCommentVO vo : list) {
             vo.setNickName(DesensitizationUtil.commonDisplay(vo.getNickName()));
-
         }
 
-        PageInfo<?> pageList = new PageInfo<>(list);
+        return getPagedGridResult(list, page);
+    }
 
-        PagedGridResult grid = new PagedGridResult();
-        grid.setPage(page);
-        grid.setRows(list);
+    @Transactional(propagation = Propagation.SUPPORTS)
+    @Override
+    public PagedGridResult searhItems(String keyword, String sort, Integer page, Integer pageSize) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("keywords", keyword);
+        map.put("sort", sort);
 
-        grid.setTotal(pageList.getPages());
-        grid.setRecords(pageList.getTotal());
+        PageHelper.startPage(page, pageSize);
+
+        List<SearchItemsVO> list = itemsMapperCustom.searhItems(map);
 
 
-        return grid;
+        return getPagedGridResult(list, page);
+    }
+
+    @Transactional(propagation = Propagation.SUPPORTS)
+    @Override
+    public PagedGridResult searhItemsByThirdCat(String catId, String sort, Integer page, Integer pageSize) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("catId", catId);
+        map.put("sort", sort);
+
+        PageHelper.startPage(page, pageSize);
+
+        List<SearchItemsVO> list = itemsMapperCustom.searhItemsByThirdCat(map);
+
+        return getPagedGridResult(list, page);
+    }
+
+    @Transactional(propagation = Propagation.SUPPORTS)
+    @Override
+    public List<ShopcatVO> queryItemBySpecIds(String specIds) {
+        String ids[] = specIds.split(",");
+        List<String> specIdsList = new ArrayList<>();
+        Collections.addAll(specIdsList, ids);
+
+        return itemsMapperCustom.queryItemsBySpecIds(specIdsList);
     }
 
     @Transactional(propagation = Propagation.SUPPORTS)
@@ -144,5 +172,16 @@ public class ItemServiceImpl implements ItemService {
 
     }
 
+    private PagedGridResult getPagedGridResult(List<?> list, Integer page) {
+
+        PageInfo<?> pageList = new PageInfo<>(list);
+        PagedGridResult grid = new PagedGridResult();
+        grid.setPage(page);
+        grid.setRows(list);
+        grid.setTotal(pageList.getPages());
+        grid.setRecords(pageList.getTotal());
+
+        return grid;
+    }
 
 }

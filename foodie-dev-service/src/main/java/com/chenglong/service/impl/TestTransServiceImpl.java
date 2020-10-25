@@ -22,7 +22,7 @@ public class TestTransServiceImpl implements TestTransService {
     @Override
     public void testProgagationTrans() {
         stuService.saveChild();
-        int i = 10/0;
+        //int i = 10/0;
         stuService.saveParent();
     }
 }

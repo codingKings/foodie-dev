@@ -5,6 +5,7 @@ import com.chenglong.pojo.ItemsImg;
 import com.chenglong.pojo.ItemsParam;
 import com.chenglong.pojo.ItemsSpec;
 import com.chenglong.pojo.vo.CommentLevelCountsVO;
+import com.chenglong.pojo.vo.ShopcatVO;
 import com.chenglong.util.PagedGridResult;
 
 import java.util.List;
@@ -65,4 +66,34 @@ public interface ItemService {
      * @return
      */
     public PagedGridResult queryPagedItemComments(String itemId, Integer level, Integer page, Integer pageSize);
+
+    /**
+     * 搜索商品列表
+     *
+     * @param keyword
+     * @param level
+     * @param page
+     * @param pageSize
+     * @return
+     */
+    public PagedGridResult searhItems(String keyword, String sort, Integer page, Integer pageSize);
+
+    /**
+     * 搜索商品列表--三级分类
+     *
+     * @param catId
+     * @param sort
+     * @param page
+     * @param pageSize
+     */
+    public PagedGridResult searhItemsByThirdCat(String catId, String sort, Integer page, Integer pageSize);
+
+    /**
+     * 根据规格ids查询最新的购物车中的商品数据，用于书信渲染购物车中的商品数据
+     *
+     * @param specIds
+     * @return
+     */
+    public List<ShopcatVO> queryItemBySpecIds(String specIds);
+
 }

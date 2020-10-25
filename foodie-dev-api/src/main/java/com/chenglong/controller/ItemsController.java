@@ -6,6 +6,7 @@ import com.chenglong.pojo.ItemsParam;
 import com.chenglong.pojo.ItemsSpec;
 import com.chenglong.pojo.vo.CommentLevelCountsVO;
 import com.chenglong.pojo.vo.ItemInfoVO;
+import com.chenglong.pojo.vo.ShopcatVO;
 import com.chenglong.service.ItemService;
 import com.chenglong.util.CHENGLONGJSONResult;
 import com.chenglong.util.PagedGridResult;
@@ -95,4 +96,85 @@ public class ItemsController extends BaseController {
 
         return CHENGLONGJSONResult.ok(grid);
     }
+
+    @ApiOperation(value = "搜索商品列表", notes = "搜索商品列表", httpMethod = "GET")
+    @GetMapping("/search")
+    public CHENGLONGJSONResult search(
+            @ApiParam(name = "keywords", value = "关键字", required = true)
+            @RequestParam String keywords,
+            @ApiParam(name = "sort", value = "排序", required = false)
+            @RequestParam String sort,
+            @ApiParam(name = "page", value = "查询下一页的第几页", required = false)
+            @RequestParam Integer page,
+            @ApiParam(name = "pageSize", value = "分页的每一页显示条数", required = false)
+            @RequestParam Integer pageSize
+    ) {
+        if (StringUtils.isBlank(keywords)) {
+            return CHENGLONGJSONResult.errorMsg(null);
+        }
+
+        if (page == null) {
+            page = 1;
+        }
+
+        if (pageSize == null) {
+            pageSize = PAGE_SIZE;
+        }
+
+        PagedGridResult grid = itemService.searhItems(keywords, sort, page, pageSize);
+
+        return CHENGLONGJSONResult.ok(grid);
+    }
+
+    @ApiOperation(value = "通过分类id搜索商品列表", notes = "通过分类id搜索商品列表", httpMethod = "GET")
+    @GetMapping("/catItems")
+    public CHENGLONGJSONResult catItems(
+            @ApiParam(name = "catId", value = "分类id", required = true)
+            @RequestParam String catId,
+            @ApiParam(name = "sort", value = "排序", required = false)
+            @RequestParam String sort,
+            @ApiParam(name = "page", value = "查询下一页的第几页", required = false)
+            @RequestParam Integer page,
+            @ApiParam(name = "pageSize", value = "分页的每一页显示条数", required = false)
+            @RequestParam Integer pageSize
+    ) {
+        if (StringUtils.isBlank(catId)) {
+            return CHENGLONGJSONResult.errorMsg(null);
+        }
+
+        if (page == null) {
+            page = 1;
+        }
+
+        if (pageSize == null) {
+            pageSize = PAGE_SIZE;
+        }
+
+        PagedGridResult grid = itemService.searhItemsByThirdCat(catId, sort, page, pageSize);
+
+        return CHENGLONGJSONResult.ok(grid);
+    }
+
+    /**
+     * 用于用户长时间未登录网站，刷新购物车中的数据（主要是商品价格），类似京东淘宝
+     *
+     * @param itemSpecIds
+     * @return
+     */
+    @ApiOperation(value = "根据商品规格ids查找最新的商品数据", notes = "通过分类id搜索商品列表", httpMethod = "GET")
+    @GetMapping("/refresh")
+    public CHENGLONGJSONResult refresh(
+            @ApiParam(name = "itemSpecIds", value = "拼接的规格ids", required = true, example = "1001,1003,1005")
+            @RequestParam String itemSpecIds
+    ) {
+        if (StringUtils.isBlank(itemSpecIds)) {
+            return CHENGLONGJSONResult.ok();
+        }
+
+        List<ShopcatVO> list = itemService.queryItemBySpecIds(itemSpecIds);
+
+        return CHENGLONGJSONResult.ok(list);
+    }
+
+
 }
